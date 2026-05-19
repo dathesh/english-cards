@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>English Cards for Kids</title>
 
   <style>
@@ -11,15 +12,16 @@
       ENGLISH CARDS FOR KIDS
       ==========================================
 
-      Это простое приложение для повторения английских карточек.
+      В приложении два режима:
 
-      Формат обучения:
-      1. Ребёнок видит английское слово.
-      2. Нажимает Sound и слушает произношение.
-      3. Пытается вспомнить значение.
-      4. Нажимает Flip Card.
-      5. Видит перевод и картинку.
-      6. Может ещё раз нажать Sound.
+      1. Student Mode
+         Режим самостоятельного повторения карточек, похожий на Anki.
+
+      2. Teacher Mode
+         Режим для онлайн-урока: преподаватель нажимает кнопки,
+         а на экране крупно появляется слово или фраза.
+
+      Teacher Mode удобно транслировать ребёнку через Discord, Zoom или OBS.
     */
 
     * {
@@ -37,7 +39,7 @@
 
     .app {
       width: 100%;
-      max-width: 980px;
+      max-width: 1080px;
       min-height: calc(100vh - 32px);
       margin: 0 auto;
       background: white;
@@ -55,18 +57,39 @@
       font-size: 28px;
     }
 
-    /*
-      Верхняя панель выбора уроков.
-    */
-    .lesson-picker {
+    .mode-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      background: #e2e8f0;
+      color: #0f172a;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .mode-btn.active {
+      background: #111827;
+      color: white;
+    }
+
+    .lesson-picker,
+    .word-picker {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 8px;
     }
 
-    .lesson-btn {
-      background: #eef2ff;
+    .lesson-btn,
+    .word-btn {
       color: #1e293b;
       border: 2px solid transparent;
       border-radius: 14px;
@@ -76,31 +99,17 @@
       font-weight: 700;
     }
 
-    .lesson-btn.active {
-      background: #2563eb;
-      color: white;
-    }
-
-    /*
-      Навигация по словам внутри текущего урока.
-      В каждом уроке сейчас 5 слов: 1, 2, 3, 4, 5.
-    */
-    .word-picker {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
+    .lesson-btn {
+      background: #eef2ff;
     }
 
     .word-btn {
       background: #f1f5f9;
-      color: #0f172a;
-      border: 2px solid transparent;
-      border-radius: 14px;
-      padding: 9px 12px;
-      font-size: 15px;
-      cursor: pointer;
-      font-weight: 700;
+    }
+
+    .lesson-btn.active {
+      background: #2563eb;
+      color: white;
     }
 
     .word-btn.active {
@@ -114,10 +123,6 @@
       min-height: 24px;
     }
 
-    /*
-      Главная карточка.
-      Она занимает оставшееся место, а кнопки всегда остаются видимыми выше низа экрана.
-    */
     .card {
       border-radius: 24px;
       background: #f8fafc;
@@ -173,14 +178,9 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
-    /*
-      Нижняя панель управления.
-      Она вынесена из карточки и находится выше низа экрана,
-      чтобы её было видно на 24-дюймовом мониторе и на ноутбуке.
-    */
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -227,11 +227,102 @@
       color: white;
     }
 
+    .clear {
+      background: #ef4444;
+      color: white;
+    }
+
     .hint {
       font-size: 14px;
       color: #64748b;
       line-height: 1.35;
       padding-bottom: 2px;
+    }
+
+    /*
+      ==========================================
+      TEACHER MODE
+      ==========================================
+    */
+
+    .teacher-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .teacher-screen {
+      border-radius: 28px;
+      background: #0f172a;
+      color: white;
+      min-height: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .teacher-big-text {
+      font-size: clamp(58px, 12vw, 150px);
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: 2px;
+      text-align: center;
+      word-break: break-word;
+      text-transform: uppercase;
+    }
+
+    .teacher-subtitle {
+      position: absolute;
+      bottom: 18px;
+      left: 20px;
+      right: 20px;
+      font-size: 18px;
+      color: #cbd5e1;
+    }
+
+    .teacher-panel {
+      background: #f8fafc;
+      border-radius: 24px;
+      padding: 16px;
+    }
+
+    .teacher-section-title {
+      margin: 0 0 10px;
+      color: #334155;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .teacher-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .teacher-action-btn {
+      background: #ffffff;
+      color: #0f172a;
+      border: 2px solid #e2e8f0;
+      min-height: 54px;
+      padding: 10px 12px;
+      font-size: 17px;
+    }
+
+    .teacher-action-btn:hover {
+      border-color: #2563eb;
+    }
+
+    .teacher-phrase-btn {
+      background: #eef2ff;
+    }
+
+    .teacher-word-btn {
+      background: #ecfdf5;
     }
 
     @media (max-height: 760px) {
@@ -244,7 +335,8 @@
         font-size: 24px;
       }
 
-      .card {
+      .card,
+      .teacher-screen {
         min-height: 300px;
         padding: 16px;
       }
@@ -269,130 +361,171 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <div class="app">
     <h1>English Cards</h1>
 
-    <!-- Кнопки выбора урока -->
-    <div id="lessonPicker" class="lesson-picker"></div>
+    <!-- Переключение между режимами -->
+    <div class="mode-switcher">
+      <button id="studentModeButton" class="mode-btn active" onclick="setMode('student')">
+        Student Mode
+      </button>
 
-    <!-- Кнопки выбора слова внутри урока -->
-    <div id="wordPicker" class="word-picker"></div>
-
-    <!-- Текущий урок и номер карточки -->
-    <div id="progress" class="progress"></div>
-
-    <div class="card">
-      <!-- Лицевая сторона: только английское слово -->
-      <div id="frontSide">
-        <div class="card-front-label">Read the word</div>
-        <div id="word" class="word"></div>
-      </div>
-
-      <!-- Обратная сторона: перевод + картинка -->
-      <div id="backSide" class="hidden">
-        <div id="translation" class="translation"></div>
-
-        <img
-          id="image"
-          class="image hidden"
-          src=""
-          alt="card image"
-          onerror="showEmojiFallback()"
-        />
-
-        <div id="emojiFallback" class="placeholder hidden"></div>
-      </div>
-
-      <audio id="audio"></audio>
+      <button id="teacherModeButton" class="mode-btn" onclick="setMode('teacher')">
+        Teacher Mode
+      </button>
     </div>
 
-    <!-- Основные кнопки подняты выше, чтобы их было видно на экране -->
-    <div class="controls">
-      <button class="prev" onclick="prevCard()">⬅ Previous</button>
-      <button class="sound" onclick="playAudio()">🔊 Sound</button>
-      <button id="flipButton" class="flip" onclick="flipCard()">🔄 Flip Card</button>
-      <button class="next" onclick="nextCard()">Next ➡</button>
+    <!-- ================= STUDENT MODE ================= -->
+    <div id="studentMode">
+      <div id="lessonPicker" class="lesson-picker"></div>
+      <div id="wordPicker" class="word-picker"></div>
+      <div id="progress" class="progress"></div>
+
+      <div class="card">
+        <div id="frontSide">
+          <div class="card-front-label">Read the word</div>
+          <div id="word" class="word"></div>
+        </div>
+
+        <div id="backSide" class="hidden">
+          <div id="translation" class="translation"></div>
+
+          <img
+            id="image"
+            class="image hidden"
+            src=""
+            alt="card image"
+            onerror="showEmojiFallback()"
+          />
+
+          <div id="emojiFallback" class="placeholder hidden"></div>
+        </div>
+
+        <audio id="audio"></audio>
+      </div>
+
+      <div class="controls">
+        <button class="prev" onclick="prevCard()">⬅ Previous</button>
+        <button class="sound" onclick="playStudentAudio()">🔊 Sound</button>
+        <button id="flipButton" class="flip" onclick="flipCard()">🔄 Flip Card</button>
+        <button class="next" onclick="nextCard()">Next ➡</button>
+      </div>
+
+      <div class="hint">
+        Student Mode: Space — перевернуть карточку, Enter — звук, ←/→ — карточки, 1–5 — слово в уроке.
+      </div>
     </div>
 
-    <div class="hint">
-      Клавиши: Space — перевернуть карточку, Enter — звук, ←/→ — карточки, 1–5 — слово в уроке.
+    <!-- ================= TEACHER MODE ================= -->
+    <div id="teacherMode" class="teacher-layout hidden">
+      <div class="teacher-screen" id="teacherScreen">
+        <div id="teacherBigText" class="teacher-big-text">READY?</div>
+        <div id="teacherSubtitle" class="teacher-subtitle">
+          Нажми кнопку ниже, чтобы показать слово или фразу
+        </div>
+      </div>
+
+      <div class="teacher-panel">
+        <p class="teacher-section-title">Lesson 1 words</p>
+        <div id="teacherWordButtons" class="teacher-buttons"></div>
+
+        <p class="teacher-section-title">Classroom phrases</p>
+        <div id="teacherPhraseButtons" class="teacher-buttons"></div>
+
+        <div class="controls">
+          <button class="sound" onclick="playTeacherCurrentAudio()">🔊 Repeat Sound</button>
+          <button class="clear" onclick="clearTeacherScreen()">Clear</button>
+        </div>
+      </div>
+
+      <div class="hint">
+        Teacher Mode: нажимай кнопки во время урока. Экран можно транслировать ребёнку через Discord / Zoom / OBS.
+      </div>
     </div>
   </div>
 
   <script>
     /*
       ==========================================
-      ДАННЫЕ КАРТОЧЕК
+      ДАННЫЕ УРОКОВ ДЛЯ STUDENT MODE
       ==========================================
-
-      Сейчас MVP содержит 10 уроков по 5 слов = 50 карточек.
-
-      image: путь к картинке.
-      audio: путь к mp3.
-      emoji: запасной вариант, если картинки нет.
-
-      Если картинок пока нет, приложение всё равно работает:
-      при перевороте карточки покажется emoji.
-
-      Если mp3 пока нет, приложение попробует озвучить слово
-      встроенным голосом браузера.
     */
 
     const lessons = [
       {
-        title: 'Lesson 1 · Animals & Food',
+        title: 'Lesson 1 · First Words',
         cards: [
+          { word: 'APPLE', ru: 'яблоко', emoji: '🍎', image: 'images/apple.png', audio: 'sounds/apple.mp3' },
+          { word: 'BALL', ru: 'мяч', emoji: '⚽', image: 'images/ball.png', audio: 'sounds/ball.mp3' },
           { word: 'CAT', ru: 'кот', emoji: '🐱', image: 'images/cat.png', audio: 'sounds/cat.mp3' },
           { word: 'DOG', ru: 'собака', emoji: '🐶', image: 'images/dog.png', audio: 'sounds/dog.mp3' },
-          { word: 'BIRD', ru: 'птица', emoji: '🐦', image: 'images/bird.png', audio: 'sounds/bird.mp3' },
-          { word: 'APPLE', ru: 'яблоко', emoji: '🍎', image: 'images/apple.png', audio: 'sounds/apple.mp3' },
-          { word: 'BALL', ru: 'мяч', emoji: '⚽', image: 'images/ball.png', audio: 'sounds/ball.mp3' }
+          { word: 'EGG', ru: 'яйцо', emoji: '🥚', image: 'images/egg.png', audio: 'sounds/egg.mp3' }
         ]
       },
       {
-        title: 'Lesson 2 · Toys & Home',
+        title: 'Lesson 2 · Animals',
         cards: [
-          { word: 'CAR', ru: 'машина', emoji: '🚗', image: 'images/car.png', audio: 'sounds/car.mp3' },
+          { word: 'FISH', ru: 'рыба', emoji: '🐟', image: 'images/fish.png', audio: 'sounds/fish.mp3' },
+          { word: 'GOAT', ru: 'коза', emoji: '🐐', image: 'images/goat.png', audio: 'sounds/goat.mp3' },
+          { word: 'HEN', ru: 'курица', emoji: '🐔', image: 'images/hen.png', audio: 'sounds/hen.mp3' },
+          { word: 'INSECT', ru: 'насекомое', emoji: '🐞', image: 'images/insect.png', audio: 'sounds/insect.mp3' },
+          { word: 'JAGUAR', ru: 'ягуар', emoji: '🐆', image: 'images/jaguar.png', audio: 'sounds/jaguar.mp3' }
+        ]
+      },
+      {
+        title: 'Lesson 3 · Toys & Home',
+        cards: [
+          { word: 'KITE', ru: 'воздушный змей', emoji: '🪁', image: 'images/kite.png', audio: 'sounds/kite.mp3' },
+          { word: 'LAMP', ru: 'лампа', emoji: '💡', image: 'images/lamp.png', audio: 'sounds/lamp.mp3' },
+          { word: 'MOON', ru: 'луна', emoji: '🌙', image: 'images/moon.png', audio: 'sounds/moon.mp3' },
+          { word: 'NEST', ru: 'гнездо', emoji: '🪺', image: 'images/nest.png', audio: 'sounds/nest.mp3' },
+          { word: 'ORANGE', ru: 'апельсин', emoji: '🍊', image: 'images/orange.png', audio: 'sounds/orange.mp3' }
+        ]
+      },
+      {
+        title: 'Lesson 4 · Easy Alphabet Words',
+        cards: [
+          { word: 'PEN', ru: 'ручка', emoji: '🖊️', image: 'images/pen.png', audio: 'sounds/pen.mp3' },
+          { word: 'QUEEN', ru: 'королева', emoji: '👑', image: 'images/queen.png', audio: 'sounds/queen.mp3' },
+          { word: 'ROBOT', ru: 'робот', emoji: '🤖', image: 'images/robot.png', audio: 'sounds/robot.mp3' },
+          { word: 'SUN', ru: 'солнце', emoji: '☀️', image: 'images/sun.png', audio: 'sounds/sun.mp3' },
+          { word: 'TREE', ru: 'дерево', emoji: '🌳', image: 'images/tree.png', audio: 'sounds/tree.mp3' }
+        ]
+      },
+      {
+        title: 'Lesson 5 · Useful Words',
+        cards: [
+          { word: 'UMBRELLA', ru: 'зонт', emoji: '☂️', image: 'images/umbrella.png', audio: 'sounds/umbrella.mp3' },
+          { word: 'VAN', ru: 'фургон', emoji: '🚐', image: 'images/van.png', audio: 'sounds/van.mp3' },
+          { word: 'WATER', ru: 'вода', emoji: '💧', image: 'images/water.png', audio: 'sounds/water.mp3' },
+          { word: 'BOX', ru: 'коробка', emoji: '📦', image: 'images/box.png', audio: 'sounds/box.mp3' },
+          { word: 'YELLOW', ru: 'жёлтый', emoji: '🟡', image: 'images/yellow.png', audio: 'sounds/yellow.mp3' }
+        ]
+      },
+      {
+        title: 'Lesson 6 · More Real Life Words',
+        cards: [
+          { word: 'ZOO', ru: 'зоопарк', emoji: '🦁', image: 'images/zoo.png', audio: 'sounds/zoo.mp3' },
           { word: 'BOOK', ru: 'книга', emoji: '📚', image: 'images/book.png', audio: 'sounds/book.mp3' },
-          { word: 'TEDDY', ru: 'мишка', emoji: '🧸', image: 'images/teddy.png', audio: 'sounds/teddy.mp3' },
-          { word: 'DOLL', ru: 'кукла', emoji: '🪆', image: 'images/doll.png', audio: 'sounds/doll.mp3' },
-          { word: 'TRAIN', ru: 'поезд', emoji: '🚂', image: 'images/train.png', audio: 'sounds/train.mp3' }
+          { word: 'CAR', ru: 'машина', emoji: '🚗', image: 'images/car.png', audio: 'sounds/car.mp3' },
+          { word: 'MILK', ru: 'молоко', emoji: '🥛', image: 'images/milk.png', audio: 'sounds/milk.mp3' },
+          { word: 'BED', ru: 'кровать', emoji: '🛏️', image: 'images/bed.png', audio: 'sounds/bed.mp3' }
         ]
       },
       {
-        title: 'Lesson 3 · Colors',
-        cards: [
-          { word: 'RED', ru: 'красный', emoji: '🔴', image: 'images/red.png', audio: 'sounds/red.mp3' },
-          { word: 'BLUE', ru: 'синий', emoji: '🔵', image: 'images/blue.png', audio: 'sounds/blue.mp3' },
-          { word: 'GREEN', ru: 'зелёный', emoji: '🟢', image: 'images/green.png', audio: 'sounds/green.mp3' },
-          { word: 'YELLOW', ru: 'жёлтый', emoji: '🟡', image: 'images/yellow.png', audio: 'sounds/yellow.mp3' },
-          { word: 'BLACK', ru: 'чёрный', emoji: '⚫', image: 'images/black.png', audio: 'sounds/black.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 4 · Family',
-        cards: [
-          { word: 'MOM', ru: 'мама', emoji: '👩', image: 'images/mom.png', audio: 'sounds/mom.mp3' },
-          { word: 'DAD', ru: 'папа', emoji: '👨', image: 'images/dad.png', audio: 'sounds/dad.mp3' },
-          { word: 'BABY', ru: 'малыш', emoji: '👶', image: 'images/baby.png', audio: 'sounds/baby.mp3' },
-          { word: 'SISTER', ru: 'сестра', emoji: '👧', image: 'images/sister.png', audio: 'sounds/sister.mp3' },
-          { word: 'BROTHER', ru: 'брат', emoji: '👦', image: 'images/brother.png', audio: 'sounds/brother.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 5 · Actions',
+        title: 'Lesson 7 · Actions',
         cards: [
           { word: 'RUN', ru: 'бежать', emoji: '🏃', image: 'images/run.png', audio: 'sounds/run.mp3' },
           { word: 'JUMP', ru: 'прыгать', emoji: '🦘', image: 'images/jump.png', audio: 'sounds/jump.mp3' },
-          { word: 'CLAP', ru: 'хлопать', emoji: '👏', image: 'images/clap.png', audio: 'sounds/clap.mp3' },
           { word: 'SIT', ru: 'сидеть', emoji: '🪑', image: 'images/sit.png', audio: 'sounds/sit.mp3' },
-          { word: 'STAND', ru: 'стоять', emoji: '🧍', image: 'images/stand.png', audio: 'sounds/stand.mp3' }
+          { word: 'STAND', ru: 'стоять', emoji: '🧍', image: 'images/stand.png', audio: 'sounds/stand.mp3' },
+          { word: 'CLAP', ru: 'хлопать', emoji: '👏', image: 'images/clap.png', audio: 'sounds/clap.mp3' }
         ]
       },
       {
-        title: 'Lesson 6 · Body',
+        title: 'Lesson 8 · Body',
         cards: [
           { word: 'HEAD', ru: 'голова', emoji: '🙂', image: 'images/head.png', audio: 'sounds/head.mp3' },
           { word: 'HAND', ru: 'рука', emoji: '✋', image: 'images/hand.png', audio: 'sounds/hand.mp3' },
@@ -402,37 +535,17 @@
         ]
       },
       {
-        title: 'Lesson 7 · Drinks & Snacks',
+        title: 'Lesson 9 · Family & People',
         cards: [
-          { word: 'MILK', ru: 'молоко', emoji: '🥛', image: 'images/milk.png', audio: 'sounds/milk.mp3' },
-          { word: 'WATER', ru: 'вода', emoji: '💧', image: 'images/water.png', audio: 'sounds/water.mp3' },
-          { word: 'JUICE', ru: 'сок', emoji: '🧃', image: 'images/juice.png', audio: 'sounds/juice.mp3' },
-          { word: 'BREAD', ru: 'хлеб', emoji: '🍞', image: 'images/bread.png', audio: 'sounds/bread.mp3' },
-          { word: 'CAKE', ru: 'торт', emoji: '🍰', image: 'images/cake.png', audio: 'sounds/cake.mp3' }
+          { word: 'MOM', ru: 'мама', emoji: '👩', image: 'images/mom.png', audio: 'sounds/mom.mp3' },
+          { word: 'DAD', ru: 'папа', emoji: '👨', image: 'images/dad.png', audio: 'sounds/dad.mp3' },
+          { word: 'BABY', ru: 'малыш', emoji: '👶', image: 'images/baby.png', audio: 'sounds/baby.mp3' },
+          { word: 'GIRL', ru: 'девочка', emoji: '👧', image: 'images/girl.png', audio: 'sounds/girl.mp3' },
+          { word: 'BOY', ru: 'мальчик', emoji: '👦', image: 'images/boy.png', audio: 'sounds/boy.mp3' }
         ]
       },
       {
-        title: 'Lesson 8 · Nature',
-        cards: [
-          { word: 'SUN', ru: 'солнце', emoji: '☀️', image: 'images/sun.png', audio: 'sounds/sun.mp3' },
-          { word: 'MOON', ru: 'луна', emoji: '🌙', image: 'images/moon.png', audio: 'sounds/moon.mp3' },
-          { word: 'STAR', ru: 'звезда', emoji: '⭐', image: 'images/star.png', audio: 'sounds/star.mp3' },
-          { word: 'TREE', ru: 'дерево', emoji: '🌳', image: 'images/tree.png', audio: 'sounds/tree.mp3' },
-          { word: 'FLOWER', ru: 'цветок', emoji: '🌸', image: 'images/flower.png', audio: 'sounds/flower.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 9 · Classroom',
-        cards: [
-          { word: 'PEN', ru: 'ручка', emoji: '🖊️', image: 'images/pen.png', audio: 'sounds/pen.mp3' },
-          { word: 'PENCIL', ru: 'карандаш', emoji: '✏️', image: 'images/pencil.png', audio: 'sounds/pencil.mp3' },
-          { word: 'BAG', ru: 'сумка', emoji: '🎒', image: 'images/bag.png', audio: 'sounds/bag.mp3' },
-          { word: 'DESK', ru: 'парта', emoji: '🧑‍💻', image: 'images/desk.png', audio: 'sounds/desk.mp3' },
-          { word: 'CHAIR', ru: 'стул', emoji: '🪑', image: 'images/chair.png', audio: 'sounds/chair.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 10 · Greetings',
+        title: 'Lesson 10 · Speaking Phrases',
         cards: [
           { word: 'HELLO', ru: 'привет', emoji: '👋', image: 'images/hello.png', audio: 'sounds/hello.mp3' },
           { word: 'BYE-BYE', ru: 'пока', emoji: '👋', image: 'images/bye-bye.png', audio: 'sounds/bye-bye.mp3' },
@@ -445,7 +558,37 @@
 
     /*
       ==========================================
-      СОСТОЯНИЕ ПРИЛОЖЕНИЯ
+      ДАННЫЕ ДЛЯ TEACHER MODE
+      ==========================================
+
+      Teacher Mode использует слова первого урока
+      и набор разговорных фраз для управления уроком.
+    */
+
+    const teacherWords = lessons[0].cards;
+
+    const teacherPhrases = [
+      { word: 'Hello!', audioText: 'Hello' },
+      { word: 'Let’s go!', audioText: "Let's go" },
+      { word: 'Look!', audioText: 'Look' },
+      { word: 'Listen!', audioText: 'Listen' },
+      { word: 'Repeat!', audioText: 'Repeat' },
+      { word: 'Good job!', audioText: 'Good job' },
+      { word: 'Try again!', audioText: 'Try again' },
+      { word: 'Great!', audioText: 'Great' },
+      { word: 'What is it?', audioText: 'What is it' },
+      { word: 'Let’s check!', audioText: "Let's check" },
+      { word: 'High five!', audioText: 'High five' },
+      { word: 'Bye-bye!', audioText: 'Bye bye' },
+      { word: 'I like ___', audioText: 'I like' },
+      { word: 'What is this?', audioText: 'What is this' },
+      { word: 'Say it.', audioText: 'Say it' },
+      { word: 'Listen and repeat.', audioText: 'Listen and repeat' }
+    ];
+
+    /*
+      ==========================================
+      STUDENT MODE STATE
       ==========================================
     */
 
@@ -456,9 +599,22 @@
 
     /*
       ==========================================
+      TEACHER MODE STATE
+      ==========================================
+    */
+
+    let teacherCurrentItem = null;
+
+    /*
+      ==========================================
       HTML-ЭЛЕМЕНТЫ
       ==========================================
     */
+
+    const studentModeEl = document.getElementById('studentMode');
+    const teacherModeEl = document.getElementById('teacherMode');
+    const studentModeButtonEl = document.getElementById('studentModeButton');
+    const teacherModeButtonEl = document.getElementById('teacherModeButton');
 
     const lessonPickerEl = document.getElementById('lessonPicker');
     const wordPickerEl = document.getElementById('wordPicker');
@@ -473,6 +629,43 @@
     const audioEl = document.getElementById('audio');
     const flipButtonEl = document.getElementById('flipButton');
 
+    const teacherBigTextEl = document.getElementById('teacherBigText');
+    const teacherSubtitleEl = document.getElementById('teacherSubtitle');
+    const teacherWordButtonsEl = document.getElementById('teacherWordButtons');
+    const teacherPhraseButtonsEl = document.getElementById('teacherPhraseButtons');
+
+    /*
+      ==========================================
+      ОБЩИЕ ФУНКЦИИ
+      ==========================================
+    */
+
+    function setMode(mode) {
+      const isTeacherMode = mode === 'teacher';
+
+      studentModeEl.classList.toggle('hidden', isTeacherMode);
+      teacherModeEl.classList.toggle('hidden', !isTeacherMode);
+
+      studentModeButtonEl.classList.toggle('active', !isTeacherMode);
+      teacherModeButtonEl.classList.toggle('active', isTeacherMode);
+    }
+
+    function speakText(text) {
+      speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.8;
+
+      speechSynthesis.speak(utterance);
+    }
+
+    /*
+      ==========================================
+      STUDENT MODE FUNCTIONS
+      ==========================================
+    */
+
     function getCards() {
       return lessons[currentLesson].cards;
     }
@@ -481,34 +674,31 @@
       return getCards()[currentCard];
     }
 
-    /*
-      Рисуем кнопки уроков: 1, 2, 3...
-    */
     function renderLessonButtons() {
       lessonPickerEl.innerHTML = '';
 
       lessons.forEach((lesson, index) => {
         const button = document.createElement('button');
+
         button.className = 'lesson-btn' + (index === currentLesson ? ' active' : '');
         button.textContent = `Lesson ${index + 1}`;
         button.title = lesson.title;
         button.onclick = () => selectLesson(index);
+
         lessonPickerEl.appendChild(button);
       });
     }
 
-    /*
-      Рисуем кнопки слов внутри урока.
-      Например: 1 CAT, 2 DOG, 3 BIRD...
-    */
     function renderWordButtons() {
       wordPickerEl.innerHTML = '';
 
       getCards().forEach((card, index) => {
         const button = document.createElement('button');
+
         button.className = 'word-btn' + (index === currentCard ? ' active' : '');
         button.textContent = `${index + 1}. ${card.word}`;
         button.onclick = () => selectCard(index);
+
         wordPickerEl.appendChild(button);
       });
     }
@@ -516,6 +706,7 @@
     function selectLesson(index) {
       currentLesson = index;
       currentCard = 0;
+
       renderLessonButtons();
       renderWordButtons();
       loadCard();
@@ -523,14 +714,11 @@
 
     function selectCard(index) {
       currentCard = index;
+
       renderWordButtons();
       loadCard();
     }
 
-    /*
-      Загружаем текущую карточку.
-      Важно: при загрузке всегда показываем только английское слово.
-    */
     function loadCard() {
       const card = getCard();
 
@@ -541,29 +729,29 @@
 
       wordEl.textContent = card.word;
       translationEl.textContent = card.ru;
+
       imageEl.src = card.image;
       imageEl.alt = card.word;
+
       emojiFallbackEl.textContent = card.emoji;
       audioEl.src = card.audio;
 
       frontSideEl.classList.remove('hidden');
       backSideEl.classList.add('hidden');
+
       imageEl.classList.add('hidden');
       emojiFallbackEl.classList.add('hidden');
+
       flipButtonEl.textContent = '🔄 Flip Card';
     }
 
-    /*
-      Перевернуть карточку.
-      На обратной стороне показываем перевод и картинку.
-      По просьбе: в момент переворота ещё раз включаем звук.
-    */
     function flipCard() {
       isFlipped = !isFlipped;
 
       if (isFlipped) {
         frontSideEl.classList.add('hidden');
         backSideEl.classList.remove('hidden');
+
         flipButtonEl.textContent = '↩ Back to Word';
 
         if (imageFailed) {
@@ -572,12 +760,14 @@
           imageEl.classList.remove('hidden');
         }
 
-        playAudio();
+        playStudentAudio();
       } else {
         frontSideEl.classList.remove('hidden');
         backSideEl.classList.add('hidden');
+
         imageEl.classList.add('hidden');
         emojiFallbackEl.classList.add('hidden');
+
         flipButtonEl.textContent = '🔄 Flip Card';
       }
     }
@@ -591,38 +781,134 @@
       }
     }
 
-    /*
-      Проигрываем mp3.
-      Если mp3 отсутствует, браузер попробует произнести слово сам.
-    */
-    function playAudio() {
+    function playStudentAudio() {
       audioEl.currentTime = 0;
 
       audioEl.play().catch(() => {
-        const utterance = new SpeechSynthesisUtterance(getCard().word);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.8;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(utterance);
+        speakText(getCard().word);
       });
     }
 
     function nextCard() {
       currentCard = (currentCard + 1) % getCards().length;
+
       renderWordButtons();
       loadCard();
     }
 
     function prevCard() {
       currentCard = (currentCard - 1 + getCards().length) % getCards().length;
+
       renderWordButtons();
       loadCard();
     }
 
+    /*
+      ==========================================
+      TEACHER MODE FUNCTIONS
+      ==========================================
+    */
+
+    function renderTeacherButtons() {
+      teacherWordButtonsEl.innerHTML = '';
+      teacherPhraseButtonsEl.innerHTML = '';
+
+      teacherWords.forEach((card) => {
+        const button = document.createElement('button');
+
+        button.className = 'teacher-action-btn teacher-word-btn';
+        button.textContent = `${card.emoji} ${card.word}`;
+
+        button.onclick = () => showTeacherItem({
+          displayText: card.word,
+          audioText: card.word,
+          audio: card.audio,
+          subtitle: card.ru
+        });
+
+        teacherWordButtonsEl.appendChild(button);
+      });
+
+      teacherPhrases.forEach((phrase) => {
+        const button = document.createElement('button');
+
+        button.className = 'teacher-action-btn teacher-phrase-btn';
+        button.textContent = phrase.word;
+
+        button.onclick = () => showTeacherItem({
+          displayText: phrase.word,
+          audioText: phrase.audioText,
+          audio: null,
+          subtitle: 'Classroom phrase'
+        });
+
+        teacherPhraseButtonsEl.appendChild(button);
+      });
+    }
+
+    function showTeacherItem(item) {
+      teacherCurrentItem = item;
+
+      teacherBigTextEl.textContent = item.displayText;
+      teacherSubtitleEl.textContent = item.subtitle || '';
+
+      playTeacherCurrentAudio();
+    }
+
+    function playTeacherCurrentAudio() {
+      if (!teacherCurrentItem) return;
+
+      if (teacherCurrentItem.audio) {
+        const teacherAudio = new Audio(teacherCurrentItem.audio);
+
+        teacherAudio.play().catch(() => {
+          speakText(teacherCurrentItem.audioText);
+        });
+      } else {
+        speakText(teacherCurrentItem.audioText);
+      }
+    }
+
+    function clearTeacherScreen() {
+      teacherCurrentItem = null;
+
+      teacherBigTextEl.textContent = '';
+      teacherSubtitleEl.textContent = 'Экран очищен';
+    }
+
+    /*
+      ==========================================
+      ГОРЯЧИЕ КЛАВИШИ
+      ==========================================
+    */
+
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowRight') nextCard();
-      if (event.key === 'ArrowLeft') prevCard();
-      if (event.key === 'Enter') playAudio();
+      const teacherIsOpen = !teacherModeEl.classList.contains('hidden');
+
+      if (teacherIsOpen) {
+        if (event.key === 'Enter') {
+          playTeacherCurrentAudio();
+        }
+
+        if (event.key === 'Escape') {
+          clearTeacherScreen();
+        }
+
+        return;
+      }
+
+      if (event.key === 'ArrowRight') {
+        nextCard();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        prevCard();
+      }
+
+      if (event.key === 'Enter') {
+        playStudentAudio();
+      }
+
       if (event.key === ' ') {
         event.preventDefault();
         flipCard();
@@ -630,15 +916,24 @@
 
       if (['1', '2', '3', '4', '5'].includes(event.key)) {
         const index = Number(event.key) - 1;
-        if (getCards()[index]) selectCard(index);
+
+        if (getCards()[index]) {
+          selectCard(index);
+        }
       }
     });
 
+    /*
+      ==========================================
+      ЗАПУСК ПРИЛОЖЕНИЯ
+      ==========================================
+    */
+
     renderLessonButtons();
     renderWordButtons();
+    renderTeacherButtons();
     loadCard();
   </script>
 </body>
 </html>
-
-
+ 
