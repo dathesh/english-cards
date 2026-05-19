@@ -341,108 +341,107 @@
     */
 
     const lessons = [
-      {
-        title: 'Lesson 1 · Animals & Food',
-        cards: [
-          { word: 'CAT', ru: 'кот', emoji: '🐱', image: 'images/cat.png', audio: 'sounds/cat.mp3' },
-          { word: 'DOG', ru: 'собака', emoji: '🐶', image: 'images/dog.png', audio: 'sounds/dog.mp3' },
-          { word: 'BIRD', ru: 'птица', emoji: '🐦', image: 'images/bird.png', audio: 'sounds/bird.mp3' },
-          { word: 'APPLE', ru: 'яблоко', emoji: '🍎', image: 'images/apple.png', audio: 'sounds/apple.mp3' },
-          { word: 'BALL', ru: 'мяч', emoji: '⚽', image: 'images/ball.png', audio: 'sounds/ball.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 2 · Toys & Home',
-        cards: [
-          { word: 'CAR', ru: 'машина', emoji: '🚗', image: 'images/car.png', audio: 'sounds/car.mp3' },
-          { word: 'BOOK', ru: 'книга', emoji: '📚', image: 'images/book.png', audio: 'sounds/book.mp3' },
-          { word: 'TEDDY', ru: 'мишка', emoji: '🧸', image: 'images/teddy.png', audio: 'sounds/teddy.mp3' },
-          { word: 'DOLL', ru: 'кукла', emoji: '🪆', image: 'images/doll.png', audio: 'sounds/doll.mp3' },
-          { word: 'TRAIN', ru: 'поезд', emoji: '🚂', image: 'images/train.png', audio: 'sounds/train.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 3 · Colors',
-        cards: [
-          { word: 'RED', ru: 'красный', emoji: '🔴', image: 'images/red.png', audio: 'sounds/red.mp3' },
-          { word: 'BLUE', ru: 'синий', emoji: '🔵', image: 'images/blue.png', audio: 'sounds/blue.mp3' },
-          { word: 'GREEN', ru: 'зелёный', emoji: '🟢', image: 'images/green.png', audio: 'sounds/green.mp3' },
-          { word: 'YELLOW', ru: 'жёлтый', emoji: '🟡', image: 'images/yellow.png', audio: 'sounds/yellow.mp3' },
-          { word: 'BLACK', ru: 'чёрный', emoji: '⚫', image: 'images/black.png', audio: 'sounds/black.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 4 · Family',
-        cards: [
-          { word: 'MOM', ru: 'мама', emoji: '👩', image: 'images/mom.png', audio: 'sounds/mom.mp3' },
-          { word: 'DAD', ru: 'папа', emoji: '👨', image: 'images/dad.png', audio: 'sounds/dad.mp3' },
-          { word: 'BABY', ru: 'малыш', emoji: '👶', image: 'images/baby.png', audio: 'sounds/baby.mp3' },
-          { word: 'SISTER', ru: 'сестра', emoji: '👧', image: 'images/sister.png', audio: 'sounds/sister.mp3' },
-          { word: 'BROTHER', ru: 'брат', emoji: '👦', image: 'images/brother.png', audio: 'sounds/brother.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 5 · Actions',
-        cards: [
-          { word: 'RUN', ru: 'бежать', emoji: '🏃', image: 'images/run.png', audio: 'sounds/run.mp3' },
-          { word: 'JUMP', ru: 'прыгать', emoji: '🦘', image: 'images/jump.png', audio: 'sounds/jump.mp3' },
-          { word: 'CLAP', ru: 'хлопать', emoji: '👏', image: 'images/clap.png', audio: 'sounds/clap.mp3' },
-          { word: 'SIT', ru: 'сидеть', emoji: '🪑', image: 'images/sit.png', audio: 'sounds/sit.mp3' },
-          { word: 'STAND', ru: 'стоять', emoji: '🧍', image: 'images/stand.png', audio: 'sounds/stand.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 6 · Body',
-        cards: [
-          { word: 'HEAD', ru: 'голова', emoji: '🙂', image: 'images/head.png', audio: 'sounds/head.mp3' },
-          { word: 'HAND', ru: 'рука', emoji: '✋', image: 'images/hand.png', audio: 'sounds/hand.mp3' },
-          { word: 'LEG', ru: 'нога', emoji: '🦵', image: 'images/leg.png', audio: 'sounds/leg.mp3' },
-          { word: 'EYE', ru: 'глаз', emoji: '👁️', image: 'images/eye.png', audio: 'sounds/eye.mp3' },
-          { word: 'NOSE', ru: 'нос', emoji: '👃', image: 'images/nose.png', audio: 'sounds/nose.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 7 · Drinks & Snacks',
-        cards: [
-          { word: 'MILK', ru: 'молоко', emoji: '🥛', image: 'images/milk.png', audio: 'sounds/milk.mp3' },
-          { word: 'WATER', ru: 'вода', emoji: '💧', image: 'images/water.png', audio: 'sounds/water.mp3' },
-          { word: 'JUICE', ru: 'сок', emoji: '🧃', image: 'images/juice.png', audio: 'sounds/juice.mp3' },
-          { word: 'BREAD', ru: 'хлеб', emoji: '🍞', image: 'images/bread.png', audio: 'sounds/bread.mp3' },
-          { word: 'CAKE', ru: 'торт', emoji: '🍰', image: 'images/cake.png', audio: 'sounds/cake.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 8 · Nature',
-        cards: [
-          { word: 'SUN', ru: 'солнце', emoji: '☀️', image: 'images/sun.png', audio: 'sounds/sun.mp3' },
-          { word: 'MOON', ru: 'луна', emoji: '🌙', image: 'images/moon.png', audio: 'sounds/moon.mp3' },
-          { word: 'STAR', ru: 'звезда', emoji: '⭐', image: 'images/star.png', audio: 'sounds/star.mp3' },
-          { word: 'TREE', ru: 'дерево', emoji: '🌳', image: 'images/tree.png', audio: 'sounds/tree.mp3' },
-          { word: 'FLOWER', ru: 'цветок', emoji: '🌸', image: 'images/flower.png', audio: 'sounds/flower.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 9 · Classroom',
-        cards: [
-          { word: 'PEN', ru: 'ручка', emoji: '🖊️', image: 'images/pen.png', audio: 'sounds/pen.mp3' },
-          { word: 'PENCIL', ru: 'карандаш', emoji: '✏️', image: 'images/pencil.png', audio: 'sounds/pencil.mp3' },
-          { word: 'BAG', ru: 'сумка', emoji: '🎒', image: 'images/bag.png', audio: 'sounds/bag.mp3' },
-          { word: 'DESK', ru: 'парта', emoji: '🧑‍💻', image: 'images/desk.png', audio: 'sounds/desk.mp3' },
-          { word: 'CHAIR', ru: 'стул', emoji: '🪑', image: 'images/chair.png', audio: 'sounds/chair.mp3' }
-        ]
-      },
-      {
-        title: 'Lesson 10 · Greetings',
-        cards: [
-          { word: 'HELLO', ru: 'привет', emoji: '👋', image: 'images/hello.png', audio: 'sounds/hello.mp3' },
-          { word: 'BYE-BYE', ru: 'пока', emoji: '👋', image: 'images/bye-bye.png', audio: 'sounds/bye-bye.mp3' },
-          { word: 'YES', ru: 'да', emoji: '✅', image: 'images/yes.png', audio: 'sounds/yes.mp3' },
-          { word: 'NO', ru: 'нет', emoji: '❌', image: 'images/no.png', audio: 'sounds/no.mp3' },
-          { word: 'THANK YOU', ru: 'спасибо', emoji: '🙏', image: 'images/thank-you.png', audio: 'sounds/thank-you.mp3' }
-        ]
-      }
-    ];
-
+  {
+    title: 'Lesson 1 · First Words',
+    cards: [
+      { word: 'APPLE', ru: 'яблоко', emoji: '🍎', image: 'images/apple.png', audio: 'sounds/apple.mp3' },
+      { word: 'BALL', ru: 'мяч', emoji: '⚽', image: 'images/ball.png', audio: 'sounds/ball.mp3' },
+      { word: 'CAT', ru: 'кот', emoji: '🐱', image: 'images/cat.png', audio: 'sounds/cat.mp3' },
+      { word: 'DOG', ru: 'собака', emoji: '🐶', image: 'images/dog.png', audio: 'sounds/dog.mp3' },
+      { word: 'EGG', ru: 'яйцо', emoji: '🥚', image: 'images/egg.png', audio: 'sounds/egg.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 2 · Animals',
+    cards: [
+      { word: 'FISH', ru: 'рыба', emoji: '🐟', image: 'images/fish.png', audio: 'sounds/fish.mp3' },
+      { word: 'GOAT', ru: 'коза', emoji: '🐐', image: 'images/goat.png', audio: 'sounds/goat.mp3' },
+      { word: 'HEN', ru: 'курица', emoji: '🐔', image: 'images/hen.png', audio: 'sounds/hen.mp3' },
+      { word: 'INSECT', ru: 'насекомое', emoji: '🐞', image: 'images/insect.png', audio: 'sounds/insect.mp3' },
+      { word: 'JAGUAR', ru: 'ягуар', emoji: '🐆', image: 'images/jaguar.png', audio: 'sounds/jaguar.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 3 · Toys & Home',
+    cards: [
+      { word: 'KITE', ru: 'воздушный змей', emoji: '🪁', image: 'images/kite.png', audio: 'sounds/kite.mp3' },
+      { word: 'LAMP', ru: 'лампа', emoji: '💡', image: 'images/lamp.png', audio: 'sounds/lamp.mp3' },
+      { word: 'MOON', ru: 'луна', emoji: '🌙', image: 'images/moon.png', audio: 'sounds/moon.mp3' },
+      { word: 'NEST', ru: 'гнездо', emoji: '🪺', image: 'images/nest.png', audio: 'sounds/nest.mp3' },
+      { word: 'ORANGE', ru: 'апельсин', emoji: '🍊', image: 'images/orange.png', audio: 'sounds/orange.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 4 · Easy Alphabet Words',
+    cards: [
+      { word: 'PEN', ru: 'ручка', emoji: '🖊️', image: 'images/pen.png', audio: 'sounds/pen.mp3' },
+      { word: 'QUEEN', ru: 'королева', emoji: '👑', image: 'images/queen.png', audio: 'sounds/queen.mp3' },
+      { word: 'ROBOT', ru: 'робот', emoji: '🤖', image: 'images/robot.png', audio: 'sounds/robot.mp3' },
+      { word: 'SUN', ru: 'солнце', emoji: '☀️', image: 'images/sun.png', audio: 'sounds/sun.mp3' },
+      { word: 'TREE', ru: 'дерево', emoji: '🌳', image: 'images/tree.png', audio: 'sounds/tree.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 5 · Useful Words',
+    cards: [
+      { word: 'UMBRELLA', ru: 'зонт', emoji: '☂️', image: 'images/umbrella.png', audio: 'sounds/umbrella.mp3' },
+      { word: 'VAN', ru: 'фургон', emoji: '🚐', image: 'images/van.png', audio: 'sounds/van.mp3' },
+      { word: 'WATER', ru: 'вода', emoji: '💧', image: 'images/water.png', audio: 'sounds/water.mp3' },
+      { word: 'BOX', ru: 'коробка', emoji: '📦', image: 'images/box.png', audio: 'sounds/box.mp3' },
+      { word: 'YELLOW', ru: 'жёлтый', emoji: '🟡', image: 'images/yellow.png', audio: 'sounds/yellow.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 6 · More Real Life Words',
+    cards: [
+      { word: 'ZOO', ru: 'зоопарк', emoji: '🦁', image: 'images/zoo.png', audio: 'sounds/zoo.mp3' },
+      { word: 'BOOK', ru: 'книга', emoji: '📚', image: 'images/book.png', audio: 'sounds/book.mp3' },
+      { word: 'CAR', ru: 'машина', emoji: '🚗', image: 'images/car.png', audio: 'sounds/car.mp3' },
+      { word: 'MILK', ru: 'молоко', emoji: '🥛', image: 'images/milk.png', audio: 'sounds/milk.mp3' },
+      { word: 'BED', ru: 'кровать', emoji: '🛏️', image: 'images/bed.png', audio: 'sounds/bed.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 7 · Actions',
+    cards: [
+      { word: 'RUN', ru: 'бежать', emoji: '🏃', image: 'images/run.png', audio: 'sounds/run.mp3' },
+      { word: 'JUMP', ru: 'прыгать', emoji: '🦘', image: 'images/jump.png', audio: 'sounds/jump.mp3' },
+      { word: 'SIT', ru: 'сидеть', emoji: '🪑', image: 'images/sit.png', audio: 'sounds/sit.mp3' },
+      { word: 'STAND', ru: 'стоять', emoji: '🧍', image: 'images/stand.png', audio: 'sounds/stand.mp3' },
+      { word: 'CLAP', ru: 'хлопать', emoji: '👏', image: 'images/clap.png', audio: 'sounds/clap.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 8 · Body',
+    cards: [
+      { word: 'HEAD', ru: 'голова', emoji: '🙂', image: 'images/head.png', audio: 'sounds/head.mp3' },
+      { word: 'HAND', ru: 'рука', emoji: '✋', image: 'images/hand.png', audio: 'sounds/hand.mp3' },
+      { word: 'LEG', ru: 'нога', emoji: '🦵', image: 'images/leg.png', audio: 'sounds/leg.mp3' },
+      { word: 'EYE', ru: 'глаз', emoji: '👁️', image: 'images/eye.png', audio: 'sounds/eye.mp3' },
+      { word: 'NOSE', ru: 'нос', emoji: '👃', image: 'images/nose.png', audio: 'sounds/nose.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 9 · Family & People',
+    cards: [
+      { word: 'MOM', ru: 'мама', emoji: '👩', image: 'images/mom.png', audio: 'sounds/mom.mp3' },
+      { word: 'DAD', ru: 'папа', emoji: '👨', image: 'images/dad.png', audio: 'sounds/dad.mp3' },
+      { word: 'BABY', ru: 'малыш', emoji: '👶', image: 'images/baby.png', audio: 'sounds/baby.mp3' },
+      { word: 'GIRL', ru: 'девочка', emoji: '👧', image: 'images/girl.png', audio: 'sounds/girl.mp3' },
+      { word: 'BOY', ru: 'мальчик', emoji: '👦', image: 'images/boy.png', audio: 'sounds/boy.mp3' }
+    ]
+  },
+  {
+    title: 'Lesson 10 · Speaking Phrases',
+    cards: [
+      { word: 'HELLO', ru: 'привет', emoji: '👋', image: 'images/hello.png', audio: 'sounds/hello.mp3' },
+      { word: 'BYE-BYE', ru: 'пока', emoji: '👋', image: 'images/bye-bye.png', audio: 'sounds/bye-bye.mp3' },
+      { word: 'YES', ru: 'да', emoji: '✅', image: 'images/yes.png', audio: 'sounds/yes.mp3' },
+      { word: 'NO', ru: 'нет', emoji: '❌', image: 'images/no.png', audio: 'sounds/no.mp3' },
+      { word: 'THANK YOU', ru: 'спасибо', emoji: '🙏', image: 'images/thank-you.png', audio: 'sounds/thank-you.mp3' }
+    ]
+  }
+];
     /*
       ==========================================
       СОСТОЯНИЕ ПРИЛОЖЕНИЯ
